@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Dashboard Recommendation Rating</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-left">
+    <span class="brand">Dashboard Recommendation Rating</span>
+    <span id="rater-badge" class="badge hidden"></span>
+  </div>
+  <div class="topbar-right">
+    <span id="save-status" class="status"></span>
+  </div>
+</header>
+
+<div id="progress-wrap" class="progress-wrap hidden">
+  <div id="progress-bar" class="progress-bar"></div>
+  <span id="progress-text" class="progress-text"></span>
+</div>
+
+<main>
+  <!-- ============================ intro ============================ -->
+  <section id="view-intro" class="view">
+    <h1>Thank you for helping with this evaluation</h1>
+
+    <div id="rater-missing" class="callout warn hidden">
+      <strong>No rater ID in this link.</strong>
+      <p>Please use the personal link you received or contact the study owner.</p>
+    </div>
+
+    <div id="rater-invalid" class="callout error hidden">
+      <strong>This link is not valid for this study.</strong>
+      <p>Please ask the study owner for your personal link.</p>
+    </div>
+
+    <div id="intro-body" class="hidden">
+      <h2>What you are asked to do</h2>
+      <p>
+        You will see a short <strong>dashboard brief</strong> (who the users are, what they want to
+        achieve, which KPIs and data columns exist) and one <strong>recommendation</strong> for how a
+        dashboard for that brief should be built. The recommendation was produced automatically by a
+        language model. Your task is to judge how good that recommendation is, on six scales.
+      </p>
+      <p>
+        Different recommendations come from different systems. <strong>You are not told which system
+        produced which recommendation</strong>, and the order is mixed on purpose. Please rate each
+        recommendation on its own merits.
+      </p>
+
+      <h2>How long it takes</h2>
+      <p>
+        You have <strong><span id="intro-count"></span> recommendations</strong> to rate, roughly
+        1&ndash;2 minutes each. You do not have to finish in one sitting: your progress is saved in this
+        browser, and opening your personal link again continues exactly where you stopped.
+      </p>
+
+      <h2>The six scales</h2>
+      <p>Every scale runs from 1 (poor) to 5 (excellent). Use the anchors as reference points:</p>
+      <table class="rubric-table">
+        <thead>
+          <tr><th>Scale</th><th>Question</th><th>1</th><th>3</th><th>5</th></tr>
+        </thead>
+        <tbody id="rubric-rows"></tbody>
+      </table>
+
+      <h2>Practical rules</h2>
+      <ul class="rules">
+        <li>Judge only what is written in the recommendation. Do not assume anything that is not there.</li>
+        <li>If a recommendation is incomplete, that is a reason for a lower score &mdash; not a reason to skip it.</li>
+        <li>Some outputs are messy or malformed. Rate them as you find them.</li>
+        <li>Use the full scale. If something is average, 3 is the correct answer.</li>
+        <li>The comment field is optional. One short sentence is enough when something stands out.</li>
+      </ul>
+
+      <h2>Data and privacy</h2>
+      <p>
+        This study is conducted at <strong id="institution"></strong>. It has been
+        <span id="ethics-status"></span>. Participation is voluntary. You may stop at any time.
+        Your assigned rater ID, scores, optional comments, timestamps and rating durations are stored
+        for up to <strong><span id="retention-months"></span> months</strong> and used in aggregated
+        form in a master's thesis. The study does not ask for your name or email address. The hosting
+        providers may process normal technical connection data under their own privacy policies.
+      </p>
+      <p>
+        To withdraw your submitted ratings before final analysis, email
+        <strong id="contact-email"></strong> and include only your assigned rater ID.
+      </p>
+
+      <label class="consent">
+        <input id="consent" type="checkbox" />
+        <span>I have read the information above and voluntarily consent to participate.</span>
+      </label>
+      <div id="consent-error" class="callout error hidden">
+        Please provide consent before starting.
+      </div>
+
+      <div class="actions">
+        <button id="btn-start" class="primary">Start rating</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ rating ============================ -->
+  <section id="view-rate" class="view hidden">
+    <div class="panes">
+      <article class="pane">
+        <h2>Dashboard brief</h2>
+        <div id="brief-body"></div>
+      </article>
+      <article class="pane">
+        <h2>Recommendation to rate</h2>
+        <div id="output-body"></div>
+      </article>
+    </div>
+
+    <form id="rating-form" class="rating-form" novalidate>
+      <h2>Your rating</h2>
+      <p class="hint">1 = poor, 5 = excellent. All six scales are required.</p>
+      <div id="scales"></div>
+      <label class="comment-label" for="comment">Comment (optional)</label>
+      <textarea id="comment" name="comment" rows="3" placeholder="Anything that stood out?"></textarea>
+      <div id="form-error" class="callout error hidden"></div>
+      <div class="actions">
+        <button type="submit" class="primary" id="btn-submit">Submit and next</button>
+      </div>
+    </form>
+  </section>
+
+  <!-- ============================ done ============================ -->
+  <section id="view-done" class="view hidden">
+    <h1>All done &mdash; thank you</h1>
+    <p id="done-summary"></p>
+    <div id="pending-warn" class="callout warn hidden">
+      <strong>Some ratings have not reached the server yet.</strong>
+      <p>
+        They are stored safely in this browser. Press &ldquo;Send again&rdquo;, and if that keeps failing,
+        download the backup file and send it to the study owner.
+      </p>
+    </div>
+    <div class="actions">
+      <button id="btn-resend">Send again</button>
+      <button id="btn-download">Download my ratings (backup)</button>
+    </div>
+    <p class="hint" id="contact-line"></p>
+  </section>
+</main>
+
+<footer class="footer">
+  <span id="footer-note">Progress is saved automatically in this browser.</span>
+</footer>
+
+<script src="config.js"></script>
+<script src="study-data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
