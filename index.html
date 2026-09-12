@@ -26,7 +26,7 @@
 <main>
   <!-- ============================ intro ============================ -->
   <section id="view-intro" class="view">
-    <h1>Thank you for helping with this evaluation</h1>
+    <h1>Rate dashboard recommendations</h1>
 
     <div id="rater-missing" class="callout warn hidden">
       <strong>No rater ID in this link.</strong>
@@ -39,43 +39,38 @@
     </div>
 
     <div id="intro-body" class="hidden">
-      <h2>What you are asked to do</h2>
-      <p>
-        You will see a short <strong>dashboard brief</strong> (who the users are, what they want to
-        achieve, which KPIs and data columns exist) and one <strong>recommendation</strong> for how a
-        dashboard for that brief should be built. The recommendation was produced automatically by a
-        language model. Your task is to judge how good that recommendation is, on six scales.
-      </p>
-      <p>
-        Different recommendations come from different systems. <strong>You are not told which system
-        produced which recommendation</strong>, and the order is mixed on purpose. Please rate each
-        recommendation on its own merits.
-      </p>
+      <div class="study-summary" aria-label="Study workload">
+        <div><strong id="intro-count"></strong><span>recommendations</span></div>
+        <div><strong id="intro-time"></strong><span>planned total time</span></div>
+        <div><strong>6</strong><span>quick scores each</span></div>
+      </div>
 
-      <h2>How long it takes</h2>
+      <h2>What to do</h2>
+      <ol class="steps">
+        <li>Read the dashboard brief.</li>
+        <li>Read one automatically generated recommendation.</li>
+        <li>Give six scores from 1 (poor) to 5 (excellent).</li>
+      </ol>
       <p>
-        You have <strong><span id="intro-count"></span> recommendations</strong> to rate, roughly
-        1&ndash;2 minutes each. You do not have to finish in one sitting: your progress is saved in this
-        browser, and opening your personal link again continues exactly where you stopped.
+        Rate only what is written. Missing or unclear information deserves a lower score.
+        Systems and order are hidden to keep the comparison fair.
       </p>
 
-      <h2>The six scales</h2>
-      <p>Every scale runs from 1 (poor) to 5 (excellent). Use the anchors as reference points:</p>
-      <table class="rubric-table">
-        <thead>
-          <tr><th>Scale</th><th>Question</th><th>1</th><th>3</th><th>5</th></tr>
-        </thead>
-        <tbody id="rubric-rows"></tbody>
-      </table>
+      <div class="scale-key" aria-label="Score meaning">
+        <span><strong>1</strong> Poor</span><span><strong>2</strong> Weak</span>
+        <span><strong>3</strong> Acceptable</span><span><strong>4</strong> Good</span>
+        <span><strong>5</strong> Excellent</span>
+      </div>
 
-      <h2>Practical rules</h2>
-      <ul class="rules">
-        <li>Judge only what is written in the recommendation. Do not assume anything that is not there.</li>
-        <li>If a recommendation is incomplete, that is a reason for a lower score &mdash; not a reason to skip it.</li>
-        <li>Some outputs are messy or malformed. Rate them as you find them.</li>
-        <li>Use the full scale. If something is average, 3 is the correct answer.</li>
-        <li>The comment field is optional. One short sentence is enough when something stands out.</li>
-      </ul>
+      <details class="rubric-details">
+        <summary>See the six rating questions and examples</summary>
+        <div id="rubric-rows" class="rubric-guide"></div>
+      </details>
+
+      <p class="callout info">
+        Progress saves automatically. You may pause and reopen this personal link on the same browser.
+        Comments are optional.
+      </p>
 
       <h2>Data and privacy</h2>
       <p>
@@ -107,6 +102,7 @@
 
   <!-- ============================ rating ============================ -->
   <section id="view-rate" class="view hidden">
+    <p id="task-meta" class="task-meta"></p>
     <div class="panes">
       <article class="pane">
         <h2>Dashboard brief</h2>
@@ -120,13 +116,13 @@
 
     <form id="rating-form" class="rating-form" novalidate>
       <h2>Your rating</h2>
-      <p class="hint">1 = poor, 5 = excellent. All six scales are required.</p>
+      <p class="hint">Choose one score for every question. 3 means acceptable, not bad.</p>
       <div id="scales"></div>
       <label class="comment-label" for="comment">Comment (optional)</label>
-      <textarea id="comment" name="comment" rows="3" placeholder="Anything that stood out?"></textarea>
+      <textarea id="comment" name="comment" rows="2" placeholder="Optional: one short reason for your scores"></textarea>
       <div id="form-error" class="callout error hidden"></div>
-      <div class="actions">
-        <button type="submit" class="primary" id="btn-submit">Submit and next</button>
+      <div class="actions rating-actions">
+        <button type="submit" class="primary" id="btn-submit">Save rating and continue</button>
       </div>
     </form>
   </section>
