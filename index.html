@@ -1,157 +1,20 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="robots" content="noindex, nofollow" />
-<title>Dashboard Recommendation Rating</title>
-<link rel="stylesheet" href="styles.css" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <meta http-equiv="refresh" content="0; url=https://script.google.com/macros/s/AKfycbyZm9W7lW2NBWRctcoQVD6VkqsPup6qSbhTAt3JcQmiWngyzYSmyFKgqcqKdBPmiRVT/exec">
+  <title>Dashboard study | Dashboard-Studie</title>
+  <style>
+    body{font:16px system-ui,sans-serif;max-width:42rem;margin:4rem auto;padding:0 1.25rem;line-height:1.5;color:#17324d}
+    a{color:#087f8c}
+  </style>
 </head>
 <body>
-<header class="topbar">
-  <div class="topbar-left">
-    <span class="brand">Dashboard Recommendation Rating</span>
-    <span id="rater-badge" class="badge hidden"></span>
-  </div>
-  <div class="topbar-right">
-    <span id="save-status" class="status"></span>
-  </div>
-</header>
-
-<div id="progress-wrap" class="progress-wrap hidden">
-  <div id="progress-bar" class="progress-bar"></div>
-  <span id="progress-text" class="progress-text"></span>
-</div>
-
-<main>
-  <!-- ============================ intro ============================ -->
-  <section id="view-intro" class="view">
-    <h1>Rate dashboard recommendations</h1>
-
-    <div id="rater-missing" class="callout warn hidden">
-      <strong>No rater ID in this link.</strong>
-      <p>Please use the personal link you received or contact the study owner.</p>
-    </div>
-
-    <div id="rater-invalid" class="callout error hidden">
-      <strong>This link is not valid for this study.</strong>
-      <p>Please ask the study owner for your personal link.</p>
-    </div>
-
-    <div id="intro-body" class="hidden">
-      <div class="study-summary" aria-label="Study workload">
-        <div><strong id="intro-count"></strong><span>recommendations</span></div>
-        <div><strong id="intro-time"></strong><span>planned total time</span></div>
-        <div><strong>6</strong><span>quick scores each</span></div>
-      </div>
-
-      <h2>What to do</h2>
-      <ol class="steps">
-        <li>Read the dashboard brief.</li>
-        <li>Read one automatically generated recommendation.</li>
-        <li>Give six scores from 1 (poor) to 5 (excellent).</li>
-      </ol>
-      <p>
-        Rate only what is written. Missing or unclear information deserves a lower score.
-        Systems and order are hidden to keep the comparison fair.
-      </p>
-
-      <div class="scale-key" aria-label="Score meaning">
-        <span><strong>1</strong> Poor</span><span><strong>2</strong> Weak</span>
-        <span><strong>3</strong> Acceptable</span><span><strong>4</strong> Good</span>
-        <span><strong>5</strong> Excellent</span>
-      </div>
-
-      <details class="rubric-details">
-        <summary>See the six rating questions and examples</summary>
-        <div id="rubric-rows" class="rubric-guide"></div>
-      </details>
-
-      <p class="callout info">
-        Progress saves automatically. You may pause and reopen this personal link on the same browser.
-        Comments are optional.
-      </p>
-
-      <h2>Data and privacy</h2>
-      <p>
-        This study is conducted at <strong id="institution"></strong>. It has been
-        <span id="ethics-status"></span>. Participation is voluntary. You may stop at any time.
-        Your assigned rater ID, scores, optional comments, timestamps and rating durations are stored
-        for up to <strong><span id="retention-months"></span> months</strong> and used in aggregated
-        form in a master's thesis. The study does not ask for your name or email address. The hosting
-        providers may process normal technical connection data under their own privacy policies.
-      </p>
-      <p>
-        To withdraw your submitted ratings before final analysis, email
-        <strong id="contact-email"></strong> and include only your assigned rater ID.
-      </p>
-
-      <label class="consent">
-        <input id="consent" type="checkbox" />
-        <span>I have read the information above and voluntarily consent to participate.</span>
-      </label>
-      <div id="consent-error" class="callout error hidden">
-        Please provide consent before starting.
-      </div>
-
-      <div class="actions">
-        <button id="btn-start" class="primary">Start rating</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================ rating ============================ -->
-  <section id="view-rate" class="view hidden">
-    <p id="task-meta" class="task-meta"></p>
-    <div class="panes">
-      <article class="pane">
-        <h2>Dashboard brief</h2>
-        <div id="brief-body"></div>
-      </article>
-      <article class="pane">
-        <h2>Recommendation to rate</h2>
-        <div id="output-body"></div>
-      </article>
-    </div>
-
-    <form id="rating-form" class="rating-form" novalidate>
-      <h2>Your rating</h2>
-      <p class="hint">Choose one score for every question. 3 means acceptable, not bad.</p>
-      <div id="scales"></div>
-      <label class="comment-label" for="comment">Comment (optional)</label>
-      <textarea id="comment" name="comment" rows="2" placeholder="Optional: one short reason for your scores"></textarea>
-      <div id="form-error" class="callout error hidden"></div>
-      <div class="actions rating-actions">
-        <button type="submit" class="primary" id="btn-submit">Save rating and continue</button>
-      </div>
-    </form>
-  </section>
-
-  <!-- ============================ done ============================ -->
-  <section id="view-done" class="view hidden">
-    <h1>All done &mdash; thank you</h1>
-    <p id="done-summary"></p>
-    <div id="pending-warn" class="callout warn hidden">
-      <strong>Some ratings have not reached the server yet.</strong>
-      <p>
-        They are stored safely in this browser. Press &ldquo;Send again&rdquo;, and if that keeps failing,
-        download the backup file and send it to the study owner.
-      </p>
-    </div>
-    <div class="actions">
-      <button id="btn-resend">Send again</button>
-      <button id="btn-download">Download my ratings (backup)</button>
-    </div>
-    <p class="hint" id="contact-line"></p>
-  </section>
-</main>
-
-<footer class="footer">
-  <span id="footer-note">Progress is saved automatically in this browser.</span>
-</footer>
-
-<script src="config.js"></script>
-<script src="study-data.js"></script>
-<script src="app.js"></script>
+  <h1>Dashboard study | Dashboard-Studie</h1>
+  <p>Opening the shared rating form… / Gemeinsames Bewertungsformular wird geöffnet …</p>
+  <p><a href="https://script.google.com/macros/s/AKfycbyZm9W7lW2NBWRctcoQVD6VkqsPup6qSbhTAt3JcQmiWngyzYSmyFKgqcqKdBPmiRVT/exec">Open the form / Formular öffnen</a></p>
+  <script>window.location.replace("https://script.google.com/macros/s/AKfycbyZm9W7lW2NBWRctcoQVD6VkqsPup6qSbhTAt3JcQmiWngyzYSmyFKgqcqKdBPmiRVT/exec");</script>
 </body>
 </html>
